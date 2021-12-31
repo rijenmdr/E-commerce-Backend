@@ -39,7 +39,8 @@ exports.addBlog = async (req, res, next) => {
             message: "Blog Created Successfully"
         })
     } catch (e) {
-        console.log(e)
+        const error = new Error(e);
+        next(error);
     }
 }
 
@@ -91,13 +92,8 @@ exports.getBlogs = async (req, res, next) => {
             })
         }
     } catch (err) {
-        console.log(err)
-        res.status(404).json({
-            status: 404,
-            statusMessage: "Fail",
-            message: "Error while fetching blog",
-            Error: err.response
-        })
+       const error = new Error(err);
+       next(error); 
     }
 }
 
@@ -129,12 +125,8 @@ exports.getBlogsByTag = async (req, res, next) => {
             })
         }
     } catch (err) {
-        res.status(404).json({
-            status: 404,
-            statusMessage: "Fail",
-            message: "Error while fetching blog",
-            Error: err.response
-        })
+        const error = new Error(err);
+        next(error); 
     }
 }
 
@@ -164,12 +156,7 @@ exports.getBlogDetail = async (req, res, next) => {
             })
         }
     } catch (err) {
-        console.log(err)
-        res.status(404).json({
-            status: 404,
-            statusMessage: "Fail",
-            message: "Error while fetching blog",
-            Error: err.response
-        })
+        const error = new Error(err);
+        next(error); 
     }
 }

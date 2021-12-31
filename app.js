@@ -24,6 +24,25 @@ app.use('/user', userRoutes);
 app.use('/category', categoryRoutes);
 app.use('/tag', tagRoutes);
 
+//error
+app.all('*',(req,res,next)=>{
+    const err = new Error('Cannot fetch the requested resources');
+    err.status= "fail";
+    err.statusCode = 404;
+    next(err)
+  })
+  
+  app.use((err,req,res,next)=>{
+    err.statusCode = err.statusCode || 500;
+    err.status = err.status || 'error';
+    err.message = err.message || 'Internal Server Error'
+    
+    res.status(err.statusCode).json({
+      status:err.statusCode,
+      statusMessage: err.status,
+      message:err.message
+    })
+  })
 
 //db-connection
 mongoose.connect(

@@ -23,6 +23,7 @@ exports.addNewCategory = async (req, res, next) => {
             message: "Category Created Successfully"
         })
     } catch (err) {
-        console.log(err)
+        const error = new Error(err);
+        next(error); 
     }
 }

@@ -56,6 +56,7 @@ exports.registerUser = async (req, res, next) => {
         }
     }
     catch (err) {
-        console.log(err)
+        const error = new Error(err);
+        next(error); 
     }
 }

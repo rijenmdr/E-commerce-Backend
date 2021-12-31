@@ -2,10 +2,11 @@ const express = require('express');
 
 const blogController = require('../controller/blog');
 const blogCommentController = require('../controller/blogComment');
+const { commentValidation } = require('../validations/commentValidation');
 
 const router = express.Router();
 
-router.post('/add-comment', blogCommentController.addComment)
+router.post('/add-comment', commentValidation, blogCommentController.addComment)
 
 router.post('/add', blogController.addBlog);
 

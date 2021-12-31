@@ -23,6 +23,7 @@ exports.addNewTag = async (req, res, next) => {
             message: "Tag Created Successfully"
         })
     } catch (err) {
-        console.log(err)
+        const error = new Error(err);
+        next(error); 
     }
 }
