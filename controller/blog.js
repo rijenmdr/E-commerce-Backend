@@ -135,10 +135,11 @@ exports.getBlogDetail = async (req, res, next) => {
     const limit = 4
 
     try {
-        const blog = await Blog.findOne({ _id: blogId }).populate('authorId', "name").populate("categoryId").populate("tags").populate("comment");
+        const blog = await Blog.findOne({ _id: blogId }).populate('authorId', "name").populate("categoryId").populate("tags");
         const relatedBlogs = await Blog.find(
             {
-                "categoryId": blog.categoryId
+                "categoryId": blog.categoryId,
+                "_id":{ $not: {$eq: blogId}}
             },
             {
                 _id: 1,
