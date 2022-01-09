@@ -37,6 +37,11 @@ const userSchema = new Schema({
         type: Date,
         required: true
     },
+    gender: {
+        type: String,
+        required: true,
+        default:'o'
+    },
     role: {
         type: Number,
         required: true
@@ -52,6 +57,18 @@ const userSchema = new Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Blog'
+        }
+    ],
+    reviews: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'ProductReview'
+        }
+    ],
+    questions: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'QuestionAnswer'
         }
     ]
 }, { timestamps: true });
