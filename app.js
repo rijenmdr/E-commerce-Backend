@@ -8,6 +8,7 @@ const blogRoutes = require('./routes/blog');
 const userRoutes = require('./routes/user');
 const categoryRoutes = require('./routes/category');
 const tagRoutes = require('./routes/tag');
+const productRoutes = require('./routes/product');
 
 const port = process.env.PORT || 3000;
 
@@ -23,6 +24,7 @@ app.use('/blog', blogRoutes);
 app.use('/user', userRoutes);
 app.use('/category', categoryRoutes);
 app.use('/tag', tagRoutes);
+app.use('/product', productRoutes);
 
 //error
 app.all('*',(req,res,next)=>{
