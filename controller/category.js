@@ -27,3 +27,19 @@ exports.addNewCategory = async (req, res, next) => {
         next(error); 
     }
 }
+
+exports.getCategories = async(req, res, next) => {
+    try {
+        const categories = await Category.find();
+
+        res.status(201).json({
+            status: 201,
+            statusMessage:"success",
+            message: "Categories fetched Successfully",
+            categories
+        })
+    } catch (err) {
+        const error = new Error(err);
+        next(error); 
+    }
+}
