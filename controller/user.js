@@ -1,5 +1,6 @@
 const User = require('../model/user');
 const bcrypt = require('bcrypt');
+const Merchant = require('../model/merchant');
 
 exports.registerUser = async (req, res, next) => {
     const {
@@ -8,15 +9,22 @@ exports.registerUser = async (req, res, next) => {
         email,
         password,
         mobileNo,
+        gender,
         country,
         city,
+        role,
         street,
         dob
     } = req.body
 
-    console.log(req.body)
+    const roleId = role === 1 ? 3 : role;
+    let name;
 
-    const name = `${firstName.trim()} ${lastName.trim()}`
+    if(roleId === 3) {
+        name = `${firstName.trim()} ${lastName.trim()}`;
+    } else {
+        name = `${firstName.trim()}`
+    }
 
     try {
         const user = await User.findOne({ email })
@@ -35,17 +43,25 @@ exports.registerUser = async (req, res, next) => {
                 email,
                 password: hashedPassword,
                 mobileNo,
+                gender,
                 address: {
                     country,
                     city,
                     street
                 },
                 dob,
-                role: 3,
+                role: roleId,
                 isVerified: false
             })
 
-            await newUser.save();
+            const user = await newUser.save();
+
+            if(roleId === 2) {
+                const merchantUser= new Merchant({
+                    userId: user._id
+                })
+                await merchantUser.save();
+            }
 
             res.status(201).json({
                 status: 201,
